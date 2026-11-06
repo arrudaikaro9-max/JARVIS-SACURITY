@@ -9,54 +9,123 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;min-height:100vh;padding:25px 16px;
+ margin:0;
+ min-height:100vh;
+ padding:25px 16px;
  background:radial-gradient(ellipse at top,#123b5c,#030712 65%);
- color:#00eaff;font-family:Arial,sans-serif;text-align:center;
+ color:#00eaff;
+ font-family:Arial,sans-serif;
+ text-align:center;
 }
+
 h1{
- font-size:38px;letter-spacing:9px;margin:25px 0 5px;
+ font-size:38px;
+ letter-spacing:9px;
+ margin:25px 0 5px;
  text-shadow:0 0 20px #00d9ff;
 }
-.sub{font-size:11px;letter-spacing:5px;color:#8ebdce}
+
+.sub{
+ font-size:11px;
+ letter-spacing:5px;
+ color:#8ebdce;
+}
+
 .orb{
- width:155px;height:155px;border:2px solid #00eaff;
- border-radius:50%;margin:28px auto;
- display:grid;place-items:center;font-size:55px;
+ width:155px;
+ height:155px;
+ border:2px solid #00eaff;
+ border-radius:50%;
+ margin:28px auto;
+ display:grid;
+ place-items:center;
+ font-size:55px;
  box-shadow:0 0 25px #00bfff,inset 0 0 25px #007da5;
  animation:pulse 3s infinite;
 }
+
 @keyframes pulse{
- 50%{box-shadow:0 0 45px #00dfff,inset 0 0 40px #007da5}
+ 50%{
+  box-shadow:0 0 45px #00dfff,inset 0 0 40px #007da5;
+ }
 }
+
 .panel{
- max-width:430px;margin:20px auto;padding:22px;
- border:1px solid #087da0;border-radius:18px;
- background:#071524eF;box-shadow:0 0 20px #00364b;
+ max-width:430px;
+ margin:20px auto;
+ padding:22px;
+ border:1px solid #087da0;
+ border-radius:18px;
+ background:#071524;
+ box-shadow:0 0 20px #00364b;
 }
+
 input{
- width:100%;padding:15px;margin:8px 0;
- border:1px solid #087da0;border-radius:9px;
- background:#020b16;color:white;font-size:15px;
+ width:100%;
+ padding:15px;
+ margin:8px 0;
+ border:1px solid #087da0;
+ border-radius:9px;
+ background:#020b16;
+ color:white;
+ font-size:15px;
 }
+
 button{
- width:100%;padding:14px;margin:8px 0;
- border:1px solid #00dfff;border-radius:25px;
- background:#06233a;color:#00eaff;
- font-weight:bold;letter-spacing:1px;font-size:13px;
+ width:100%;
+ padding:14px;
+ margin:8px 0;
+ border:1px solid #00dfff;
+ border-radius:25px;
+ background:#06233a;
+ color:#00eaff;
+ font-weight:bold;
+ letter-spacing:1px;
+ font-size:13px;
 }
+
 button:active{background:#07506b}
+
 .hidden{display:none}
-#message{font-size:13px;color:#b4eaff;line-height:1.5}
-.status{
- border:1px solid #087da0;border-radius:12px;
- padding:15px;margin:12px 0;background:#03101e;
+
+#message{
+ font-size:13px;
+ color:#b4eaff;
+ line-height:1.5;
 }
-#clock{font-size:27px;letter-spacing:3px}
-.small{font-size:11px;color:#8ebdce;letter-spacing:2px}
+
+.status{
+ border:1px solid #087da0;
+ border-radius:12px;
+ padding:15px;
+ margin:12px 0;
+ background:#03101e;
+}
+
+#clock{
+ font-size:27px;
+ letter-spacing:3px;
+}
+
+.small{
+ font-size:11px;
+ color:#8ebdce;
+ letter-spacing:2px;
+}
+
 .command{
- padding:20px;border:1px solid #087da0;
- border-radius:14px;background:#03101e;margin-top:15px;
+ padding:20px;
+ border:1px solid #087da0;
+ border-radius:14px;
+ background:#03101e;
+ margin-top:15px;
+}
+
+#voiceText{
+ color:#d4f8ff;
+ line-height:1.5;
 }
 </style>
 </head>
@@ -98,11 +167,23 @@ button:active{background:#07506b}
  <div class="command">
   <h3>ASSISTENTE DE VOZ</h3>
   <p id="voiceText">Aguardando comando...</p>
-  <button onclick="ouvirComando()">🎙️ FALAR COM JARVIS</button>
+
+  <button onclick="ouvirComando()">
+   🎙️ FALAR COM JARVIS
+  </button>
+
+  <button onclick="falar('Olá! Eu sou o JARVIS. Estou online e pronto para ajudar.')">
+   🔊 TESTAR VOZ DO JARVIS
+  </button>
  </div>
 
- <button onclick="cadastrarPasskey()">CADASTRAR PASSKEY / FACE ID</button>
- <button onclick="sair()">ENCERRAR SESSÃO</button>
+ <button onclick="cadastrarPasskey()">
+  CADASTRAR PASSKEY / FACE ID
+ </button>
+
+ <button onclick="sair()">
+  ENCERRAR SESSÃO
+ </button>
 </div>
 
 <div id="message">AGUARDANDO AUTENTICAÇÃO...</div>
@@ -110,6 +191,8 @@ button:active{background:#07506b}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js"></script>
 
 <script>
+// CONEXÃO SUPABASE
+
 const SUPABASE_URL =
 "https://thcszojpxzxpbmiyzder.supabase.co";
 
@@ -126,32 +209,40 @@ const client = supabase.createClient(
  }
 );
 
-const msg=document.getElementById("message");
+const msg = document.getElementById("message");
 
 function mensagem(texto){
- msg.innerText=texto;
+ msg.innerText = texto;
 }
 
 function mostrarPainel(autenticado){
- document.getElementById("login").classList.toggle("hidden",autenticado);
- document.getElementById("dashboard").classList.toggle("hidden",!autenticado);
+ document.getElementById("login")
+ .classList.toggle("hidden",autenticado);
+
+ document.getElementById("dashboard")
+ .classList.toggle("hidden",!autenticado);
 }
 
-async function cadastrar(){
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
+// CADASTRO
 
- if(!email||!password){
+async function cadastrar(){
+ const email = document.getElementById("email").value.trim();
+ const password = document.getElementById("password").value;
+
+ if(!email || !password){
   mensagem("Preencha seu e-mail e sua senha.");
   return;
  }
 
  mensagem("Criando sua conta...");
 
- const {data,error}=await client.auth.signUp({email,password});
+ const {data,error} = await client.auth.signUp({
+  email,
+  password
+ });
 
  if(error){
-  mensagem("Erro: "+error.message);
+  mensagem("Erro: " + error.message);
   return;
  }
 
@@ -163,18 +254,26 @@ async function cadastrar(){
  }
 }
 
+// LOGIN COM SENHA
+
 async function entrar(){
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
+ const email = document.getElementById("email").value.trim();
+ const password = document.getElementById("password").value;
+
+ if(!email || !password){
+  mensagem("Informe seu e-mail e sua senha.");
+  return;
+ }
 
  mensagem("Verificando acesso...");
 
- const {data,error}=await client.auth.signInWithPassword({
-  email,password
+ const {error} = await client.auth.signInWithPassword({
+  email,
+  password
  });
 
  if(error){
-  mensagem("Erro: "+error.message);
+  mensagem("Erro: " + error.message);
   return;
  }
 
@@ -182,32 +281,48 @@ async function entrar(){
  mensagem("Bem-vindo ao JARVIS!");
 }
 
+// CADASTRAR PASSKEY
+
 async function cadastrarPasskey(){
  mensagem("Preparando cadastro da Passkey...");
 
- const {error}=await client.auth.registerPasskey();
+ try{
+  const {error} = await client.auth.registerPasskey();
 
- if(error){
-  mensagem("Não foi possível cadastrar: "+error.message);
-  return;
+  if(error){
+   mensagem("Erro: " + error.message);
+   return;
+  }
+
+  mensagem("Passkey cadastrada com sucesso!");
+
+ }catch(error){
+  mensagem("Erro: " + error.message);
  }
-
- mensagem("Passkey cadastrada com sucesso!");
 }
+
+// ENTRAR COM FACE ID
 
 async function entrarPasskey(){
  mensagem("Aguardando autenticação do aparelho...");
 
- const {error}=await client.auth.signInWithPasskey();
+ try{
+  const {error} = await client.auth.signInWithPasskey();
 
- if(error){
-  mensagem("Falha na autenticação: "+error.message);
-  return;
+  if(error){
+   mensagem("Falha na autenticação: " + error.message);
+   return;
+  }
+
+  mostrarPainel(true);
+  mensagem("Autenticação concluída!");
+
+ }catch(error){
+  mensagem("Erro: " + error.message);
  }
-
- mostrarPainel(true);
- mensagem("Autenticação concluída!");
 }
+
+// ENCERRAR SESSÃO
 
 async function sair(){
  await client.auth.signOut();
@@ -215,8 +330,16 @@ async function sair(){
  mensagem("Sessão encerrada.");
 }
 
+// VERIFICAR SESSÃO
+
 async function verificarSessao(){
- const {data}=await client.auth.getSession();
+ const {data,error} = await client.auth.getSession();
+
+ if(error){
+  mensagem("Erro ao verificar sessão.");
+  return;
+ }
+
  mostrarPainel(!!data.session);
 }
 
@@ -226,66 +349,122 @@ client.auth.onAuthStateChange((_event,session)=>{
 
 verificarSessao();
 
-function atualizarRelogio(){
- const agora=new Date();
+// RELÓGIO
 
- document.getElementById("clock").textContent=
+function atualizarRelogio(){
+ const agora = new Date();
+
+ document.getElementById("clock").textContent =
  agora.toLocaleTimeString("pt-BR");
 
- document.getElementById("date").textContent=
+ document.getElementById("date").textContent =
  agora.toLocaleDateString("pt-BR");
 }
 
 atualizarRelogio();
 setInterval(atualizarRelogio,1000);
 
-function ouvirComando(){
- const SpeechRecognition=
- window.SpeechRecognition||window.webkitSpeechRecognition;
+// VOZ DO JARVIS
 
- if(!SpeechRecognition){
-  document.getElementById("voiceText").textContent=
-  "Seu navegador não oferece suporte a comandos de voz.";
+function falar(texto){
+ const area = document.getElementById("voiceText");
+
+ if(!("speechSynthesis" in window)){
+  area.textContent = "Voz não disponível neste navegador.";
   return;
  }
 
- const reconhecimento=new SpeechRecognition();
- reconhecimento.lang="pt-BR";
- reconhecimento.start();
+ window.speechSynthesis.cancel();
 
- document.getElementById("voiceText").textContent=
- "Estou ouvindo...";
+ const voz = new SpeechSynthesisUtterance(texto);
 
- reconhecimento.onresult=function(event){
-  const fala=event.results[0][0].transcript.toLowerCase();
+ voz.lang = "pt-BR";
+ voz.rate = 0.95;
+ voz.pitch = 1;
+ voz.volume = 1;
 
-  document.getElementById("voiceText").textContent=
-  "Você disse: "+fala;
+ voz.onstart = function(){
+  area.textContent = "JARVIS está falando...";
+ };
 
-  if(fala.includes("horas")){
-   falar("Agora são "+new Date().toLocaleTimeString("pt-BR"));
-  }else if(fala.includes("olá")||fala.includes("oi")){
-   falar("Olá. JARVIS está online.");
-  }else if(fala.includes("status")){
+ voz.onend = function(){
+  area.textContent = texto;
+ };
+
+ voz.onerror = function(){
+  area.textContent = "Erro ao reproduzir voz. Tente novamente.";
+ };
+
+ window.speechSynthesis.speak(voz);
+}
+
+// RECONHECIMENTO DE VOZ
+
+function ouvirComando(){
+ const SpeechRecognition =
+ window.SpeechRecognition ||
+ window.webkitSpeechRecognition;
+
+ if(!SpeechRecognition){
+  document.getElementById("voiceText").textContent =
+  "Reconhecimento de voz não disponível neste navegador.";
+  return;
+ }
+
+ const reconhecimento = new SpeechRecognition();
+
+ reconhecimento.lang = "pt-BR";
+ reconhecimento.continuous = false;
+ reconhecimento.interimResults = false;
+ reconhecimento.maxAlternatives = 1;
+
+ const area = document.getElementById("voiceText");
+
+ area.textContent = "JARVIS está ouvindo...";
+
+ reconhecimento.onresult = function(event){
+  const falaUsuario =
+  event.results[0][0].transcript.toLowerCase();
+
+  area.textContent = "Você disse: " + falaUsuario;
+
+  if(falaUsuario.includes("horas")){
+   falar("Agora são " + new Date().toLocaleTimeString("pt-BR"));
+
+  }else if(
+   falaUsuario.includes("olá") ||
+   falaUsuario.includes("oi")
+  ){
+   falar("Olá! Estou online e pronto para ajudar.");
+
+  }else if(falaUsuario.includes("status")){
    falar("Todos os sistemas da interface estão online.");
+
+  }else if(falaUsuario.includes("seu nome")){
+   falar("Meu nome é JARVIS. Seu assistente virtual.");
+
   }else{
-   falar("Comando recebido. Ainda estou aprendendo.");
+   falar("Comando recebido. Ainda estou aprendendo a responder.");
   }
  };
 
- reconhecimento.onerror=function(){
-  document.getElementById("voiceText").textContent=
-  "Não consegui ouvir. Tente novamente.";
+ reconhecimento.onerror = function(event){
+  area.textContent = "Não consegui ouvir. Tente novamente.";
  };
-}
 
-function falar(texto){
- if("speechSynthesis" in window){
-  const voz=new SpeechSynthesisUtterance(texto);
-  voz.lang="pt-BR";
-  speechSynthesis.speak(voz);
+ reconhecimento.onend = function(){
+  if(area.textContent === "JARVIS está ouvindo..."){
+   area.textContent = "Aguardando comando...";
+  }
+ };
+
+ try{
+  reconhecimento.start();
+ }catch(error){
+  area.textContent = "Não foi possível iniciar o microfone.";
  }
 }
+
 </script>
 
 </body>
