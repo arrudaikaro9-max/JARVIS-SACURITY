@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050b16">
+<title>JARVIS SECURITY</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #102b45, #030711 70%);
+  color: #00d9ff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 25px;
+}
+
+header {
+  margin-top: 35px;
+}
+
+h1 {
+  font-size: 32px;
+  letter-spacing: 7px;
+  text-shadow: 0 0 18px #00d9ff;
+}
+
+.subtitle {
+  color: #91b9ca;
+  font-size: 12px;
+  letter-spacing: 4px;
+  margin-top: 12px;
+}
+
+.orb {
+  width: 210px;
+  height: 210px;
+  border: 2px solid #00d9ff;
+  border-radius: 50%;
+  margin: 65px auto 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px #007cba, inset 0 0 30px #007cba;
+  animation: pulse 3s infinite;
+}
+
+.orb-inner {
+  width: 145px;
+  height: 145px;
+  border: 2px solid #008ebc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 45px #00d9ff, inset 0 0 40px #007cba;
+  }
+}
+
+.status {
+  color: #70eaff;
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+button {
+  background: transparent;
+  border: 1px solid #00d9ff;
+  color: #00d9ff;
+  padding: 16px 35px;
+  border-radius: 30px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  box-shadow: 0 0 15px #006eaa;
+}
+
+button:active {
+  background: #003e59;
+}
+
+.panel {
+  margin: 35px auto;
+  max-width: 400px;
+  border: 1px solid #087da0;
+  border-radius: 15px;
+  padding: 22px;
+  background: #071524cc;
+}
+
+.panel h2 {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.panel p {
+  color: #91b9ca;
+  font-size: 13px;
+  line-height: 2;
+}
+
+footer {
+  margin-top: 55px;
+  color: #426c80;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>JARVIS</h1>
+  <div class="subtitle">SECURITY SYSTEM</div>
+</header>
+
+<div class="orb">
+  <div class="orb-inner">◉</div>
+</div>
+
+<div class="status" id="status">
+  SYSTEM STANDBY
+</div>
+
+<button onclick="iniciar()">INICIAR INTERFACE</button>
+
+<div class="panel">
+  <h2>PAINEL DO SISTEMA</h2>
+  <p>
+    SISTEMA: JARVIS SECURITY<br>
+    INTERFACE: ONLINE<br>
+    PROTEÇÃO: EM CONFIGURAÇÃO<br>
+    BIOMETRIA: NÃO CONFIGURADA
+  </p>
+</div>
+
+<footer>
+  JARVIS SECURITY © 2026
+</footer>
+
+<script>
+function iniciar() {
+  document.getElementById("status").innerText =
+    "INTERFACE INICIADA";
+}
+</script>
+
+</body>
+</html>
