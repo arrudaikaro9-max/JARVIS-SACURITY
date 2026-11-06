@@ -3,161 +3,203 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050b16">
 <title>JARVIS SECURITY</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+* { box-sizing:border-box; }
 body {
-  min-height: 100vh;
-  background: radial-gradient(circle at center, #102b45, #030711 70%);
-  color: #00d9ff;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 25px;
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(circle,#102c48,#030711 75%);
+  color:#00d9ff;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding:25px 16px;
 }
-
-header {
-  margin-top: 35px;
-}
-
 h1 {
-  font-size: 32px;
-  letter-spacing: 7px;
-  text-shadow: 0 0 18px #00d9ff;
+  margin-top:35px;
+  letter-spacing:8px;
+  text-shadow:0 0 20px #00d9ff;
 }
-
-.subtitle {
-  color: #91b9ca;
-  font-size: 12px;
-  letter-spacing: 4px;
-  margin-top: 12px;
-}
-
+.sub { letter-spacing:4px;color:#91b9ca;font-size:12px; }
 .orb {
-  width: 210px;
-  height: 210px;
-  border: 2px solid #00d9ff;
-  border-radius: 50%;
-  margin: 65px auto 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 25px #007cba, inset 0 0 30px #007cba;
-  animation: pulse 3s infinite;
+  width:155px;height:155px;border:2px solid #00d9ff;
+  border-radius:50%;margin:35px auto;
+  display:grid;place-items:center;
+  box-shadow:0 0 35px #008bc0,inset 0 0 30px #008bc0;
+  font-size:55px;
 }
-
-.orb-inner {
-  width: 145px;
-  height: 145px;
-  border: 2px solid #008ebc;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-}
-
-@keyframes pulse {
-  50% {
-    box-shadow: 0 0 45px #00d9ff, inset 0 0 40px #007cba;
-  }
-}
-
-.status {
-  color: #70eaff;
-  font-size: 13px;
-  letter-spacing: 2px;
-  margin-bottom: 25px;
-}
-
-button {
-  background: transparent;
-  border: 1px solid #00d9ff;
-  color: #00d9ff;
-  padding: 16px 35px;
-  border-radius: 30px;
-  font-size: 13px;
-  letter-spacing: 2px;
-  box-shadow: 0 0 15px #006eaa;
-}
-
-button:active {
-  background: #003e59;
-}
-
 .panel {
-  margin: 35px auto;
-  max-width: 400px;
-  border: 1px solid #087da0;
-  border-radius: 15px;
-  padding: 22px;
-  background: #071524cc;
+  max-width:420px;margin:20px auto;padding:22px;
+  border:1px solid #087da0;border-radius:16px;
+  background:#071524e8;
 }
-
-.panel h2 {
-  font-size: 15px;
-  margin-bottom: 15px;
+input {
+  width:100%;padding:14px;margin:8px 0;
+  border:1px solid #087da0;border-radius:8px;
+  background:#030b16;color:white;font-size:15px;
 }
-
-.panel p {
-  color: #91b9ca;
-  font-size: 13px;
-  line-height: 2;
+button {
+  width:100%;padding:14px;margin:8px 0;
+  border:1px solid #00d9ff;border-radius:25px;
+  background:#06233a;color:#00d9ff;
+  font-weight:bold;letter-spacing:1px;
 }
-
-footer {
-  margin-top: 55px;
-  color: #426c80;
-  font-size: 10px;
-  letter-spacing: 2px;
-}
+button:disabled {opacity:.5}
+#message {color:#b4eaff;font-size:13px;line-height:1.5}
+.hidden {display:none}
 </style>
 </head>
 
 <body>
+<h1>JARVIS</h1>
+<div class="sub">SECURITY SYSTEM</div>
+<div class="orb">◉</div>
 
-<header>
-  <h1>JARVIS</h1>
-  <div class="subtitle">SECURITY SYSTEM</div>
-</header>
+<div class="panel" id="login">
+  <h3>ACESSO AO SISTEMA</h3>
+  <input id="email" type="email" placeholder="Seu e-mail">
+  <input id="password" type="password" placeholder="Sua senha">
 
-<div class="orb">
-  <div class="orb-inner">◉</div>
+  <button onclick="cadastrar()">CRIAR CONTA</button>
+  <button onclick="entrar()">ENTRAR COM SENHA</button>
+  <button onclick="entrarPasskey()">ENTRAR COM PASSKEY</button>
 </div>
 
-<div class="status" id="status">
-  SYSTEM STANDBY
+<div class="panel hidden" id="dashboard">
+  <h3>JARVIS ONLINE</h3>
+  <p>Identidade autenticada.</p>
+  <button onclick="cadastrarPasskey()">CADASTRAR PASSKEY / FACE ID</button>
+  <button onclick="sair()">ENCERRAR SESSÃO</button>
 </div>
 
-<button onclick="iniciar()">INICIAR INTERFACE</button>
+<div id="message">AGUARDANDO AUTENTICAÇÃO...</div>
 
-<div class="panel">
-  <h2>PAINEL DO SISTEMA</h2>
-  <p>
-    SISTEMA: JARVIS SECURITY<br>
-    INTERFACE: ONLINE<br>
-    PROTEÇÃO: EM CONFIGURAÇÃO<br>
-    BIOMETRIA: NÃO CONFIGURADA
-  </p>
-</div>
-
-<footer>
-  JARVIS SECURITY © 2026
-</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js"></script>
 
 <script>
-function iniciar() {
-  document.getElementById("status").innerText =
-    "INTERFACE INICIADA";
-}
-</script>
+const SUPABASE_URL =
+  "https://thcszojpxzxpbmiyzder.supabase.co";
 
+const SUPABASE_KEY =
+  "sb_publishable_tgsdXiO514XfTMmGXbI6rQ_w9THA5zX";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth: {
+      experimental: { passkey: true }
+    }
+  }
+);
+
+const msg = document.getElementById("message");
+
+function mensagem(texto) {
+  msg.innerText = texto;
+}
+
+function mostrarPainel(autenticado) {
+  document.getElementById("login").classList.toggle("hidden", autenticado);
+  document.getElementById("dashboard").classList.toggle("hidden", !autenticado);
+}
+
+async function cadastrar() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    mensagem("Preencha seu e-mail e sua senha.");
+    return;
+  }
+
+  mensagem("Criando sua conta...");
+
+  const { data, error } = await client.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    mensagem("Erro: " + error.message);
+    return;
+  }
+
+  if (!data.session) {
+    mensagem("Conta criada! Confirme seu e-mail e depois entre.");
+  } else {
+    mostrarPainel(true);
+    mensagem("Conta criada e acesso liberado!");
+  }
+}
+
+async function entrar() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  mensagem("Verificando acesso...");
+
+  const { data, error } = await client.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    mensagem("Erro: " + error.message);
+    return;
+  }
+
+  mostrarPainel(true);
+  mensagem("Bem-vindo ao JARVIS!");
+}
+
+async function cadastrarPasskey() {
+  mensagem("Preparando cadastro da Passkey...");
+
+  const { data, error } = await client.auth.registerPasskey();
+
+  if (error) {
+    mensagem("Não foi possível cadastrar: " + error.message);
+    return;
+  }
+
+  mensagem("Passkey cadastrada com sucesso! 🔐");
+}
+
+async function entrarPasskey() {
+  mensagem("Aguardando autenticação do aparelho...");
+
+  const { data, error } =
+    await client.auth.signInWithPasskey();
+
+  if (error) {
+    mensagem("Falha na autenticação: " + error.message);
+    return;
+  }
+
+  mostrarPainel(true);
+  mensagem("Autenticação concluída! Bem-vindo ao JARVIS.");
+}
+
+async function sair() {
+  await client.auth.signOut();
+  mostrarPainel(false);
+  mensagem("Sessão encerrada.");
+}
+
+async function verificarSessao() {
+  const { data } = await client.auth.getSession();
+  mostrarPainel(!!data.session);
+}
+
+verificarSessao();
+
+client.auth.onAuthStateChange((_event, session) => {
+  mostrarPainel(!!session);
+});
+</script>
 </body>
 </html>
