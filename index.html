@@ -11,122 +11,87 @@
 *{box-sizing:border-box}
 
 body{
- margin:0;
- min-height:100vh;
- padding:25px 16px;
+ margin:0;min-height:100vh;padding:25px 16px;
  background:radial-gradient(ellipse at top,#123b5c,#030712 65%);
- color:#00eaff;
- font-family:Arial,sans-serif;
- text-align:center;
+ color:#00eaff;font-family:Arial,sans-serif;text-align:center;
 }
 
 h1{
- font-size:38px;
- letter-spacing:9px;
- margin:25px 0 5px;
+ font-size:38px;letter-spacing:9px;margin:25px 0 5px;
  text-shadow:0 0 20px #00d9ff;
 }
 
-.sub{
- font-size:11px;
- letter-spacing:5px;
- color:#8ebdce;
-}
+.sub{font-size:11px;letter-spacing:5px;color:#8ebdce}
 
 .orb{
- width:155px;
- height:155px;
- border:2px solid #00eaff;
- border-radius:50%;
- margin:28px auto;
- display:grid;
- place-items:center;
- font-size:55px;
+ width:155px;height:155px;border:2px solid #00eaff;
+ border-radius:50%;margin:28px auto;display:grid;
+ place-items:center;font-size:55px;
  box-shadow:0 0 25px #00bfff,inset 0 0 25px #007da5;
  animation:pulse 3s infinite;
 }
 
 @keyframes pulse{
- 50%{
-  box-shadow:0 0 45px #00dfff,inset 0 0 40px #007da5;
- }
+ 50%{box-shadow:0 0 45px #00dfff,inset 0 0 40px #007da5}
 }
 
 .panel{
- max-width:430px;
- margin:20px auto;
- padding:22px;
- border:1px solid #087da0;
- border-radius:18px;
- background:#071524;
- box-shadow:0 0 20px #00364b;
+ max-width:430px;margin:20px auto;padding:22px;
+ border:1px solid #087da0;border-radius:18px;
+ background:#071524;box-shadow:0 0 20px #00364b;
 }
 
 input{
- width:100%;
- padding:15px;
- margin:8px 0;
- border:1px solid #087da0;
- border-radius:9px;
- background:#020b16;
- color:white;
- font-size:15px;
+ width:100%;padding:15px;margin:8px 0;
+ border:1px solid #087da0;border-radius:9px;
+ background:#020b16;color:white;font-size:15px;
 }
 
 button{
- width:100%;
- padding:14px;
- margin:8px 0;
- border:1px solid #00dfff;
- border-radius:25px;
- background:#06233a;
- color:#00eaff;
- font-weight:bold;
- letter-spacing:1px;
- font-size:13px;
+ width:100%;padding:14px;margin:8px 0;
+ border:1px solid #00dfff;border-radius:25px;
+ background:#06233a;color:#00eaff;
+ font-weight:bold;letter-spacing:1px;font-size:13px;
 }
 
 button:active{background:#07506b}
+button:disabled{opacity:.5}
 
 .hidden{display:none}
 
 #message{
- font-size:13px;
- color:#b4eaff;
- line-height:1.5;
+ font-size:13px;color:#b4eaff;line-height:1.5;
 }
 
 .status{
- border:1px solid #087da0;
- border-radius:12px;
- padding:15px;
- margin:12px 0;
- background:#03101e;
+ border:1px solid #087da0;border-radius:12px;
+ padding:15px;margin:12px 0;background:#03101e;
 }
 
-#clock{
- font-size:27px;
- letter-spacing:3px;
-}
+#clock{font-size:27px;letter-spacing:3px}
 
-.small{
- font-size:11px;
- color:#8ebdce;
- letter-spacing:2px;
-}
+.small{font-size:11px;color:#8ebdce;letter-spacing:2px}
 
 .command{
- padding:20px;
- border:1px solid #087da0;
- border-radius:14px;
- background:#03101e;
- margin-top:15px;
+ padding:20px;border:1px solid #087da0;
+ border-radius:14px;background:#03101e;margin-top:15px;
 }
 
 #voiceText{
- color:#d4f8ff;
- line-height:1.5;
+ color:#d4f8ff;line-height:1.6;
+ white-space:pre-wrap;overflow-wrap:anywhere;
 }
+
+#pergunta{
+ width:100%;padding:14px;margin:10px 0;
+ border:1px solid #087da0;border-radius:12px;
+ background:#020b16;color:white;font-size:15px;
+}
+
+.orb.thinking{
+ animation:pulse .7s infinite;
+}
+
 </style>
 </head>
 
@@ -135,7 +100,7 @@ button:active{background:#07506b}
 <h1>JARVIS</h1>
 <div class="sub">ADVANCED SECURITY SYSTEM</div>
 
-<div class="orb">◉</div>
+<div class="orb" id="orb">◉</div>
 
 <div class="panel" id="login">
  <h3>ACESSO AO SISTEMA</h3>
@@ -150,6 +115,7 @@ button:active{background:#07506b}
 </div>
 
 <div class="panel hidden" id="dashboard">
+
  <h2>JARVIS ONLINE</h2>
  <p class="small">SISTEMA AUTENTICADO</p>
 
@@ -161,12 +127,26 @@ button:active{background:#07506b}
 
  <div class="status">
   <p>● SISTEMA OPERACIONAL</p>
-  <p class="small">SEGURANÇA ATIVA</p>
+  <p class="small">INTELIGÊNCIA ARTIFICIAL CONECTÁVEL</p>
  </div>
 
  <div class="command">
-  <h3>ASSISTENTE DE VOZ</h3>
-  <p id="voiceText">Aguardando comando...</p>
+  <h3>ASSISTENTE DE INTELIGÊNCIA ARTIFICIAL</h3>
+
+  <p id="voiceText">
+   Olá! Sou o JARVIS. Estou aguardando suas instruções.
+  </p>
+
+  <input
+   id="pergunta"
+   type="text"
+   placeholder="Digite sua pergunta..."
+   onkeydown="if(event.key==='Enter') enviarPergunta()"
+  >
+
+  <button id="enviarBtn" onclick="enviarPergunta()">
+   ENVIAR PERGUNTA
+  </button>
 
   <button onclick="ouvirComando()">
    🎙️ FALAR COM JARVIS
@@ -184,6 +164,7 @@ button:active{background:#07506b}
  <button onclick="sair()">
   ENCERRAR SESSÃO
  </button>
+
 </div>
 
 <div id="message">AGUARDANDO AUTENTICAÇÃO...</div>
@@ -191,7 +172,10 @@ button:active{background:#07506b}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js"></script>
 
 <script>
+
+// =================================
 // CONEXÃO SUPABASE
+// =================================
 
 const SUPABASE_URL =
 "https://thcszojpxzxpbmiyzder.supabase.co";
@@ -223,9 +207,12 @@ function mostrarPainel(autenticado){
  .classList.toggle("hidden",!autenticado);
 }
 
+// =================================
 // CADASTRO
+// =================================
 
 async function cadastrar(){
+
  const email = document.getElementById("email").value.trim();
  const password = document.getElementById("password").value;
 
@@ -237,8 +224,7 @@ async function cadastrar(){
  mensagem("Criando sua conta...");
 
  const {data,error} = await client.auth.signUp({
-  email,
-  password
+  email,password
  });
 
  if(error){
@@ -254,9 +240,12 @@ async function cadastrar(){
  }
 }
 
-// LOGIN COM SENHA
+// =================================
+// LOGIN
+// =================================
 
 async function entrar(){
+
  const email = document.getElementById("email").value.trim();
  const password = document.getElementById("password").value;
 
@@ -268,8 +257,7 @@ async function entrar(){
  mensagem("Verificando acesso...");
 
  const {error} = await client.auth.signInWithPassword({
-  email,
-  password
+  email,password
  });
 
  if(error){
@@ -281,9 +269,12 @@ async function entrar(){
  mensagem("Bem-vindo ao JARVIS!");
 }
 
-// CADASTRAR PASSKEY
+// =================================
+// PASSKEY / FACE ID
+// =================================
 
 async function cadastrarPasskey(){
+
  mensagem("Preparando cadastro da Passkey...");
 
  try{
@@ -301,9 +292,8 @@ async function cadastrarPasskey(){
  }
 }
 
-// ENTRAR COM FACE ID
-
 async function entrarPasskey(){
+
  mensagem("Aguardando autenticação do aparelho...");
 
  try{
@@ -322,17 +312,24 @@ async function entrarPasskey(){
  }
 }
 
-// ENCERRAR SESSÃO
+// =================================
+// SAIR
+// =================================
 
 async function sair(){
+
  await client.auth.signOut();
+
  mostrarPainel(false);
  mensagem("Sessão encerrada.");
 }
 
+// =================================
 // VERIFICAR SESSÃO
+// =================================
 
 async function verificarSessao(){
+
  const {data,error} = await client.auth.getSession();
 
  if(error){
@@ -349,9 +346,12 @@ client.auth.onAuthStateChange((_event,session)=>{
 
 verificarSessao();
 
+// =================================
 // RELÓGIO
+// =================================
 
 function atualizarRelogio(){
+
  const agora = new Date();
 
  document.getElementById("clock").textContent =
@@ -364,9 +364,12 @@ function atualizarRelogio(){
 atualizarRelogio();
 setInterval(atualizarRelogio,1000);
 
+// =================================
 // VOZ DO JARVIS
+// =================================
 
 function falar(texto){
+
  const area = document.getElementById("voiceText");
 
  if(!("speechSynthesis" in window)){
@@ -392,22 +395,148 @@ function falar(texto){
  };
 
  voz.onerror = function(){
-  area.textContent = "Erro ao reproduzir voz. Tente novamente.";
+  area.textContent = "Erro ao reproduzir voz.";
  };
 
  window.speechSynthesis.speak(voz);
 }
 
+// =================================
+// CONEXÃO COM A INTELIGÊNCIA ARTIFICIAL
+// =================================
+
+async function perguntarAoJarvis(pergunta){
+
+ const texto = pergunta.trim();
+
+ if(!texto){
+  return "Por favor, faça uma pergunta.";
+ }
+
+ const {data,error} = await client.functions.invoke(
+  "jarvis-ai",
+  {
+   body:{
+    message:texto
+   }
+  }
+ );
+
+ if(error){
+  console.error("Erro na função JARVIS:",error);
+  throw new Error(
+   error.message || "Não foi possível conectar à inteligência artificial."
+  );
+ }
+
+ if(!data || !data.answer){
+  throw new Error("A inteligência artificial não retornou uma resposta válida.");
+ }
+
+ return data.answer;
+}
+
+// =================================
+// ENVIAR PERGUNTA POR TEXTO
+// =================================
+
+async function enviarPergunta(){
+
+ const campo = document.getElementById("pergunta");
+ const botao = document.getElementById("enviarBtn");
+ const area = document.getElementById("voiceText");
+ const pergunta = campo.value.trim();
+
+ if(!pergunta){
+  area.textContent = "Digite uma pergunta primeiro.";
+  return;
+ }
+
+ campo.value = "";
+ botao.disabled = true;
+
+ area.textContent = "JARVIS está pensando...";
+ document.getElementById("orb").classList.add("thinking");
+
+ try{
+
+  const resposta = await perguntarAoJarvis(pergunta);
+
+  area.textContent = resposta;
+
+  falar(resposta);
+
+ }catch(error){
+
+  console.error(error);
+
+  area.textContent =
+   "Não consegui acessar minha inteligência artificial. " +
+   "Verifique sua conexão e tente novamente.";
+
+  mensagem("Erro na IA: " + error.message);
+
+ }finally{
+
+  botao.disabled = false;
+  document.getElementById("orb").classList.remove("thinking");
+
+ }
+}
+
+// =================================
+// PROCESSAR COMANDO DE VOZ
+// =================================
+
+async function processarComando(pergunta){
+
+ const area = document.getElementById("voiceText");
+
+ area.textContent = "Você disse: " + pergunta;
+
+ document.getElementById("orb").classList.add("thinking");
+
+ try{
+
+  const resposta = await perguntarAoJarvis(pergunta);
+
+  area.textContent = resposta;
+
+  falar(resposta);
+
+ }catch(error){
+
+  console.error(error);
+
+  const respostaErro =
+   "Desculpe, não consegui me conectar à minha inteligência artificial.";
+
+  area.textContent = respostaErro;
+
+  falar(respostaErro);
+
+ }finally{
+
+  document.getElementById("orb").classList.remove("thinking");
+
+ }
+}
+
+// =================================
 // RECONHECIMENTO DE VOZ
+// =================================
 
 function ouvirComando(){
+
  const SpeechRecognition =
  window.SpeechRecognition ||
  window.webkitSpeechRecognition;
 
  if(!SpeechRecognition){
+
   document.getElementById("voiceText").textContent =
   "Reconhecimento de voz não disponível neste navegador.";
+
   return;
  }
 
@@ -423,36 +552,23 @@ function ouvirComando(){
  area.textContent = "JARVIS está ouvindo...";
 
  reconhecimento.onresult = function(event){
+
   const falaUsuario =
-  event.results[0][0].transcript.toLowerCase();
+  event.results[0][0].transcript;
 
-  area.textContent = "Você disse: " + falaUsuario;
-
-  if(falaUsuario.includes("horas")){
-   falar("Agora são " + new Date().toLocaleTimeString("pt-BR"));
-
-  }else if(
-   falaUsuario.includes("olá") ||
-   falaUsuario.includes("oi")
-  ){
-   falar("Olá! Estou online e pronto para ajudar.");
-
-  }else if(falaUsuario.includes("status")){
-   falar("Todos os sistemas da interface estão online.");
-
-  }else if(falaUsuario.includes("seu nome")){
-   falar("Meu nome é JARVIS. Seu assistente virtual.");
-
-  }else{
-   falar("Comando recebido. Ainda estou aprendendo a responder.");
-  }
+  processarComando(falaUsuario);
  };
 
  reconhecimento.onerror = function(event){
-  area.textContent = "Não consegui ouvir. Tente novamente.";
+
+  console.error("Erro no microfone:",event.error);
+
+  area.textContent =
+  "Não consegui ouvir. Verifique a permissão do microfone e tente novamente.";
  };
 
  reconhecimento.onend = function(){
+
   if(area.textContent === "JARVIS está ouvindo..."){
    area.textContent = "Aguardando comando...";
   }
